@@ -26,7 +26,7 @@ function addIndex (no, nest, sectionStr) {
 }
 
 var convert = function (error, data) {
-	var dataStr = data.toString().replace(/#.+#\n/g, '');
+	var dataStr = data.toString().replace(/#.+#\n/g, '').replace(/\n\n/, '');
 	var footer = '\n' + data.toString().replace(/#.+#\n/, '').match(/#.+#\n/g).join('').replace(/[# ]/g, '');
 	addIndex([], 0, '\n' + dataStr);
 	console.log(footer);
