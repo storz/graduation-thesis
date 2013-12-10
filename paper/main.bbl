@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{ipsj-thesisformat}
+情報処理学会の誰か.
+\newblock 情報処理学会論文誌 (ipsj journal) 原稿執筆案内.
+\newblock
+  \url{http://www.ipsj.or.jp/08editt/journal/shippitsu/ronbunJ-prms.pdf},
+  2008-09-01.
+
+\bibitem{Findlater:2011}
+Leah Findlater, Jacob~O. Wobbrock, and Daniel Wigdor.
+\newblock Typing on flat glass: examining ten-finger expert typing patterns on
+  touch surfaces.
+\newblock In {\em Proceedings of the 2011 annual conference on Human factors in
+  computing systems}, CHI '11, pages 2453--2462, New York, NY, USA, 2011. ACM.
+
+\bibitem{motomura:2000-11-15}
+本村 憲史, 橋本 誠志, 井上 明, and 金田 重郎.
+\newblock
+  ネットワーク上での情報統合に対するプライバシー保護($<$特集$>$:電子化知的財産・社会基盤).
+\newblock {\em 情報処理学会論文誌}, 41(11):2985--3000, 2000-11-15.
+
+\end{thebibliography}

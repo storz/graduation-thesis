@@ -1,0 +1,207 @@
+%
+% Shuron.sty Ver 1.0
+%  LaTeX style-file For Master Paper
+%  written by Kohji Inoue
+%  based on ronbun.sty Rel 1.0
+%  by Masahide Ogasawara and Ryuhei Uehara
+%
+
+% not include in dos. Use flushleft equation
+%\input{fleqn.sty}
+%----------------------------------------------------------------------
+% NTT-Jlatex & ASCII-Jlatex を共通化するスタイルファイル Ver 1.1
+%                                    By 上原隆平 91'3'10
+%
+%
+% 使用上の注意
+% i) \bf コマンドには注意が必要です．
+%        {\bf English is bold. 明朝になるかゴチックになるか不定}
+%      日本語の部分は，ASCII ではゴチック，NTT では明朝になります．
+% ii) フォントの大きさの指定がうまくいかないことがあります．
+%      例:NTT-TeX の古いバージョンで
+%        {\large\jtiny This is large. これは小さい！}
+%      なんてやってるとこれは全部 tiny に統一されてしまいます．
+%      (すべての文字が最後に指定したサイズになります．)
+% iii) 長さの単位 zh,zw について
+%      ASCII-TeX では長さの単位として zh,zw が定義されていますが，
+%      NTT-TeX ではこれは定義されていません．
+%      そこで新たな長さコマンド，\zh,\zw を用意しました．
+%      zh,zw のかわりに \zh, \zw と書くだけで O.K. です．
+%        例: \hspace{5zh} -> \hspace{5\zh}
+%      ちなみにそれぞれの長さは実測でだいたい
+%        1zw = 25 / 26 em,  1zh = 17 / 8 ex
+%      となりました．誤差は実用上問題ないと思います．
+
+\newlength{\zw} \setlength{\zw}{0.961em} % 1zw = 25 / 26 em
+\newlength{\zh} \setlength{\zh}{2.125ex} % 1zh = 17 / 8 ex
+\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax}
+\ifundefined{dg}
+ % case ASCII-TeX
+ \typeout{This is ascii!!}
+ \def\jtiny{\tiny}  \def\jscriptsize{\scriptsize}
+ \def\jfootnotesize{\footnotesize}  \def\jsmall{\small}
+ \def\jnormalsize{\normalsize}
+ \def\jlarge{\large} \def\jLarge{\Large}  \def\jLARGE{\LARGE}
+ \def\jhuge{\huge} \def\jHuge{\Huge}
+ \def\dg{\gt} \def\dm{\mc}
+\else
+ % case NTT-TeX
+ \typeout{This is ntt!!}
+ \def\gt{\dg} \def\mc{\dm}
+\fi
+%----------------------------------------------------------------------
+%
+%     章の設定
+%
+
+\def\chapter{\clearpage \global\@topnum\z@
+\secdef\@chapter\@schapter} 
+
+\def\@chapapp{ 第 {\thechapter} 章 }
+
+\def\@makechapterhead#1{
+ \vspace*{10pt}
+  {\parindent 0pt
+%  \LARGE \bf \gt
+   \huge \bf \gt
+%   \@hangfrom{\hskip 20pt\relax\@chapapp{}   %第XX章
+   \@hangfrom{\relax\@chapapp{}   %第XX章
+   \hskip 20pt\relax}\par                    %改行
+%   \vskip 20pt \hskip 20pt {\interlinepenalty \@M #1\par} %{縦方向空白 vskip 20pt } タイトル
+   \vskip 20pt {\interlinepenalty \@M #1\par}  %{縦方向空白 vskip 20pt } タイトル
+   \nobreak
+   \vskip 20pt}
+}
+
+\def\@makeschapterhead#1{
+  \vspace*{-10pt}
+  {\parindent 0pt
+   \LARGE \bf \gt
+   \@hangfrom{\hskip 20pt\relax}{\interlinepenalty \@M #1\par}
+   \nobreak
+   \vskip 10pt}
+}
+
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp}
+ \addcontentsline{toc}{chapter}{\@chapapp\hspace*{1em}#1}\else
+ \addcontentsline{toc}{chapter}{#1}\fi
+ \chaptermark{#1}
+ \addtocontents{lof}{\protect\addvspace{10pt}}
+\addtocontents{lot}{\protect\addvspace{10pt}} \if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} 
+\def\@schapter#1{\if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
+ \else \@makeschapterhead{#1} 
+ \@afterheading\fi}
+
+%
+%     節などの設定
+%
+
+\def\section{\@startsection {section}{1}{\z@}{3.5ex plus 1ex minus 
+ .2ex}{2.3ex plus .2ex}{\Large\bf\gt}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{3.25ex plus 1ex minus  .2ex}{1.5ex plus .2ex}{\large\bf\gt}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{3.25ex plus 
+ 1ex minus .2ex}{1.5ex plus .2ex}{\normalsize\bf\gt}}
+\def\paragraph{\@startsection
+ {paragraph}{4}{\z@}{3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf\gt}}
+\def\subparagraph{\@startsection
+ {subparagraph}{4}{\parindent}{3.25ex plus 1ex minus 
+ .2ex}{-1em}{\normalsize\bf\gt}}
+
+%
+%     付録の設定
+%
+%\def\appendix{\par
+%  \setcounter{chapter}{0}
+%  \setcounter{section}{0}
+%  \def\@chapapp{Appendix}
+%  \def\thechapter{\Alph{chapter}}}
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp{付録\thechapter}
+ \def\thechapter{\Alph{chapter}}}
+
+%
+%     謝辞の設定
+%
+
+\def\ackn{\par
+ \def\@chapapp{謝辞}
+ \markright{謝辞}
+ \chapter*{謝辞}
+ \addcontentsline{toc}{chapter}{謝辞}}
+
+%
+%     参考文献の設定
+%
+
+\def\thebibliography#1{\chapter*{参考文献 \@mkboth{参考文献}{参考文献} }\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \fussy
+\sfcode`\.=1000\relax
+% \sfcode`\.=1000\relax
+\addcontentsline{toc}{chapter}{参考文献}}
+%
+%     図，表の設定
+%
+
+\def\fnum@figure{図 \thefigure}
+\def\fnum@table{表 \thetable}
+
+%
+%     大きさなどの設定
+%
+
+\sloppy
+\hbadness=1000
+\tolerance=5000
+
+\def\topfraction{1.0}
+\def\bottomfraction{1.0}
+\def\textfraction{0.0}
+%\def\baselinestretch{1.3}
+\def\baselinestretch{1.5}
+\def\arraystretch{1.3}
+
+%\textwidth = 145mm
+\textwidth = 147.5mm
+\textheight = 225mm
+\topmargin = -18pt
+\headheight = 9mm
+%\oddsidemargin = 30pt
+%\evensidemargin = 0pt
+\oddsidemargin = 10mm
+\evensidemargin = \oddsidemargin
+\parindent = 1em
+\headsep = 20mm
+%\mathindent = 3em
+
+%\setcounter{totalnumber}{5}
+
+%
+%	電通大ロゴ
+%
+%\newfont{\ueclogo}{ueclogo}
+
+%
+%	ヘッダ、フッダ、ページの設定
+%
+\pagestyle{fancyplain}
+\renewcommand{\headrule}{\vbox to 0pt {\hbox to\headwidth{\dotfill}\vss}}
+\setlength{\headrulewidth}{0.4pt}
+\setlength{\footrulewidth}{0.0pt}
+\addtolength{\headwidth}{\marginparsep}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{\thechapter. #1}}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection\ #1}{\thesection\ #1}}
+\chead[\fancyplain{}{\bf \rightmark}]{\fancyplain {}{\bf\rightmark}}
+\rhead[\fancyplain{}{\bf \thepage}]{\fancyplain {}{\bf\thepage}}
+\lhead{}
+\cfoot{}
