@@ -3,7 +3,9 @@
 * 章立て(仮): [index.md](https://github.com/storz/graduation-thesis/blob/master/index.md)
 * 予稿: 
 * 発表スライド: 
-* 論文: 
+* 論文: [thesis.pdf](https://github.com/storz/graduation-thesis/blob/master/paper/thesis.pdf)
+
+* 実験用コード: [storz/Notifauth - GitHub](https://github.com/storz/Notifauth)
 
 ## 変更履歴
 2013/11/29 markdownに箇条書き番号をlatexのように振る糞スクリプト追加

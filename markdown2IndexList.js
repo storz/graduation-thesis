@@ -26,9 +26,11 @@ function addIndex (no, nest, sectionStr) {
 }
 
 var convert = function (error, data) {
-	var dataStr = data.toString().replace(/#.+#\n/, '');
+	var dataStr = data.toString().replace(/#.+#\n/g, '');
+	var footer = '\n' + data.toString().replace(/#.+#\n/, '').match(/#.+#\n/g).join('').replace(/[# ]/g, '');
 	addIndex([], 0, '\n' + dataStr);
-	fs.writeFile('index.txt', output);
+	console.log(footer);
+	fs.writeFile('index.txt', output + footer);
 };
 
 fs.readFile('index.md', convert);
