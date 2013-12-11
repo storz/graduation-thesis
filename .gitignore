@@ -1,0 +1,4 @@
+paper/
+!paper/documents
+!paper/*.tex
+!thesis.pdf
