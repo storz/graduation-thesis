@@ -1,4 +1,4 @@
-paper/
-!paper/documents
-!paper/*.tex
-!thesis.pdf
+paper/*
+!documents/
+!*.tex
+!*.pdf
