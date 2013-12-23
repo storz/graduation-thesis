@@ -2,3 +2,5 @@ paper/*
 !documents/
 !*.tex
 !*.pdf
+experimentData
+docs

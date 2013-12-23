@@ -1,5 +1,7 @@
-var fs = require('fs');
+var fs = require('fs'),
+	path = require('path');
 var output = '';
+var scriptDir = path.dirname(process.argv[1]);
 
 function makeIndent (nest) {
 	var indent = '';
@@ -30,7 +32,7 @@ var convert = function (error, data) {
 	var footer = '\n' + data.toString().replace(/#.+#\n/, '').match(/#.+#\n/g).join('').replace(/[# ]/g, '');
 	addIndex([], 0, '\n' + dataStr);
 	console.log(footer);
-	fs.writeFile('index.txt', output + footer);
+	fs.writeFile(path.resolve(scriptDir, '..')+'/index.txt', output + footer);
 };
 
-fs.readFile('index.md', convert);
+fs.readFile(path.resolve(scriptDir, '..')+'/index.md', convert);
