@@ -3,4 +3,7 @@ paper/*
 !*.tex
 !*.pdf
 experimentData
+rawData
+reference_
 docs
+users.js
