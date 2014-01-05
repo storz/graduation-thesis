@@ -2,6 +2,7 @@ paper/*
 !documents/
 !*.tex
 !*.pdf
+!*.sty
 experimentData
 rawData
 reference_
