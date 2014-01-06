@@ -1,8 +1,0 @@
-cd ~/graduation-thesis/img/
-for f in *.png; do
-if [ -e $f ]; then
-echo $f
-/usr/local/bin/convert $f ${f%.png}.eps
-mv $f ./original/$f
-fi
-done
