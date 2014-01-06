@@ -22,16 +22,16 @@ Webサービス上の情報を用いた認証では，以下の様なものが�
 Nemotoら\cite{nemoto:2006-03-15}らは，Twitterのダイレクトメッセージ\footnote{特定のユーザ宛に，一対一で送信された文章のこと．閲覧可能な人物は，自分と相手のみである．}機能を用いて，定期的に質問を投げかけることでその回答を秘密情報とし，認証を行うシステムを提案した．質問の内容は，「2月15日の昼食は？」といった文面で送信された．
 
 \subsection{友人の顔写真を用いた認証}
-Facebook\footnote{Facebook株式会社(本社はアメリカ合衆国)が提供しているSNSである．本名での登録が必須という特徴を持つ．2004年に学生のみが使用できるサービスであったが，その後一般にも開放され，現在では世界最大のアクセス数を誇るSNSとなっている．}では，友人の顔写真を表示し本名を回答させることを要求する認証が運用されている．
+Facebook\footnote{米Facebook社が提供しているSNSである．本名での登録が必須という特徴を持つ．2004年に学生のみが使用できるサービスであったが，その後一般にも開放され，現在では世界最大のアクセス数を誇るSNSとなっている．}では，友人の顔写真を表示し本名を回答させることを要求する認証が運用されている．
 これはパスワードを忘れてしまった際や，アカウントへの不審なアクセスが確認された場合の本人証明に使われている．
 Facebookにはユーザから投稿された写真にユーザ名を結びつけることができ，さらに自動で人の顔を抽出しタグ付けを行う機能が存在するため，それを利用していると考えられる．
 欧州ではプライバシー保護のためこの自動顔認識の機能が無効にされるなどしている．
 
-\begin{figure}[th]
+\begin{figure}[ht]
 \begin{center}
 \epsfig{file=img/facebookFaceAuth.eps,scale=0.5}
 \end{center}
-\caption{Facebook におけ友人の顔写真を用いた認証画面}
+\caption{Facebookにおけ友人の顔写真を用いた認証画面}
 \label{fig:facebookFaceAuth}
 \end{figure}
 
@@ -40,16 +40,72 @@ Facebookにはユーザから投稿された写真にユーザ名を結びつけ
 ワンタイムパスワードの生成手法は複数あり，
 \begin{itemize}
 \item 数学的アルゴリズムを用いるもの：一方向性関数に初期シードを与えることで動作，パスワードを生成させる手法
-\item 時刻同期によるもの：認証サーバの時計と同期させ，その時刻に基づいてパスワードを生成する手法
+\item 時刻同期によるもの：認証サーバの時計と同期させ，その時刻に基づいてパスワードを生成する手法(RFC 6238\footnote{Time-Based One-Time Password Algorithm}で定義されている)
 \item トランザクション認証番号を用いるもの：ランダム生成されたパスワードのリストを用意し，それを消費してゆく手法
 \item EメールやSMSを使用するもの：EメールやSMSなどを経由してワンタイムパスワードを送信する手法
 \end{itemize}
 などが一般的である．具体的な応用例は以下に示す．
 
 \subsection{Google}
+Googleでは，アカウントにログインする際に複数の多要素化方式を用意している．
+一つはEメール/SMSを用いてワンタイムパスワードを送信する手法であり，これはログインの際にID/パスワードの入力が正しいものであれば携帯端末へ送信される．
+もう一つの方式として，携帯端末向けのワンタイムパスワード生成アプリケーション(図\ref{fig:googleAuthenticator})を公開しており，こちらはユーザ固有の秘密鍵とサーバからのメッセージを用いて30秒ごとにHMAC-SHA1を生成・6桁の数字コードに変換している．
+
+\begin{figure}[ht]
+\begin{center}
+\epsfig{file=img/googleAuthenticator.eps,scale=0.5}
+\end{center}
+\caption{Google Authenticatorのワンタイムパスワード表示画面}
+\label{fig:googleAuthenticator}
+\end{figure}
+
 \subsection{PassBan}
+PassBoard\footnote{米PassBan社により提供}というアプリケーションソフトウェアは，スマートフォン上にある各アプリケーションにアクセスする際の認証機能を提供している(図\ref{fig:passboard})．このアプリケーションでは，パスワード認証や音声認証，GPS認証，顔認証などを組み合わせて多要素化が可能となっている．
+
+\begin{figure}[ht]
+\begin{center}
+\epsfig{file=img/passboard.eps,scale=0.75}
+\end{center}
+\caption{PassBoardの設定画面}
+\label{fig:passboard}
+\end{figure}
+
 \subsection{Authy}
+Authy\footnote{米}というアプリケーションソフトウェアを用いると，GoogleやDropboxなどの二要素認証に対応しているサービスだけでなく，SSH\footnote{Secure SHell}接続やWordPress\footnote{オープンソースのブログソフトウェア}へのログインも二要素化が可能となる．
+Authyに紐付けたWebサービスへログインする際は，通常の手順に加えAuthyのアプリケーション内に表示されているアクセストークン(図\ref{fig:authyiPhone})を入力することで，ログインが完了する．
+
+\begin{figure}[ht]
+\begin{center}
+\epsfig{file=img/authyiPhone.eps,scale=0.35}
+\end{center}
+\caption{Authyのトークン表示画面}
+\label{fig:authyiPhone}
+\end{figure}
+
 \subsection{オンラインゲームにおける多要素化例}
-オンラインゲームにおいては，ハードウェアトークンによる認証の多要素化が普及している\cite{arXiv:1309.5344}\cite{onlinegameSecurity}．
+オンラインゲームにおいては，ハードウェアトークン(図\ref{fig:physicalAuthenticator})による認証の多要素化が普及している\cite{arXiv:1309.5344}．
+2004年にゲームの限定パッケージにハードウェアトークンが付属した\cite{onlinegameSecurity}ことがきっかけで現在でも多くのオンラインゲームに二要素認証が導入されている，
+これらのハードウェアトークンの多くは時刻同期によるワンタイムパスワード生成を行っており，小型の液晶画面にそれを表示したものをログイン時にIDとパスワードの後に入力させることで行っている．
+また近年では，他のWebサービスと同様に携帯端末向けの専用トークン生成アプリケーションソフトウェア(図\ref{fig:mobileAuthenticator})が用意されていることもある．
+
+\begin{figure}[ht]
+
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=50mm]{img/physicalAuthenticator.eps}
+\end{center}
+\caption{ハードウェアトークンの例}
+\label{fig:physicalAuthenticator}
+\end{minipage}
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/mobileAuthenticator.eps}
+\end{center}
+\caption{トークン生成アプリケーションの例}
+\label{fig:mobileAuthenticator}
+\end{minipage}
+
+\end{figure}
+
 
 \newpage
