@@ -25,8 +25,8 @@
 \end{enumerate}
 が挙げられ，他にも考えうる手段としては以下の様なものがあったが，記載の理由により前述の手法をとることにした．
 \begin{itemize}
-\item 音楽を用いて認証を行う方法：認証を行いにくい場面が存在するため，趣味趣向に大きく依存してしまうため
-\item Twitterのお気に入り情報を用いる手法：お気に入りに登録された日時が取得できないこと，お気に入りにしたツイート自体は他人の制御化にあるため
+\item 音楽を用いて認証を行う方法：認証を行いにくい場面が存在すること，趣味趣向に大きく依存してしまうこと
+\item Twitterのお気に入り情報を用いる手法：お気に入りに登録された日時が取得できないこと，お気に入りにしたツイート自体は他人の制御下にあるため
 \end{itemize}
 
 また，時系列における情報を保持していることの特徴として，時間情報によって範囲を指定することで，秘密となる情報群を抽出することができるというものがある．
@@ -34,16 +34,74 @@
 これによる具体的な利点は\ref{sec:feature}節にて示す．
 
 \section{システムの詳細}
-本論文における提案システムとして，前節の内容を踏まえて，利便性(憶えやすさ/使いやすさ)と安全性の両立を目指した個人認証手法を実装した．
+本論文における提案システムとして，前節の内容を踏まえて，利便性(憶えやすさ/使いやすさ)と安全性の両立を目指した個人認証手法を実装した(以下Notifauth)．
+Notifauth起動時の画面は図\ref{fig:notifauthHome}のようになっており，この画面から新規登録画面(図\ref{fig:notifauthLogin})\footnote{Twitterと連携するためOAuthを用いた}への遷移，設定画面への遷移，実験の試行を開始，実験結果の送信を行うことが可能となっている．
 
+\begin{figure}[ht]
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthHome.eps}
+\end{center}
+\caption{Notifauth起動時の画面}
+\label{fig:notifauthHome}
+\end{minipage}
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthLogin.eps}
+\end{center}
+\caption{Notifauthユーザ登録画面}
+\label{fig:notifauthLogin}
+\end{minipage}
+\end{figure}
+
+\subsection{秘密情報の設定}
 この手法を用いた秘密の設定方法として，
 \begin{itemize}
-\item Auto Mode Type Term：○日/週/月/年から△日~年間を指定し，その範囲に当てはまるツイートが鍵
-\item Auto Mode Type Cycle：○曜日の△時という条件に当てはまるツイートが鍵
-\item Manual Mode：自分のツイートから任意に1つ鍵を選ぶ
+\item Auto Mode Type Term：○日/週/月/年前から△日~年間を指定し，認証時点にその範囲に当てはまるツイートが秘密情報となる(図\ref{fig:notifauthAutoTerm})
+\item Auto Mode Type Cycle：○曜日の△時台という条件に当てはまるツイートが秘密情報となる(図\ref{fig:notifauthAutoCycle})
+\item Manual Mode：自分のツイートから任意に1つ秘密情報となるものを選ぶ(図\ref{fig:notifauthManual})
 \end{itemize}
 以上の3つを実装した．
 
+\begin{figure}[ht]
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthAutoTerm.eps}
+\end{center}
+\caption{Auto Mode Type Termの設定画面}
+\label{fig:notifauthAutoTerm}
+\end{minipage}
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthAutoCycle.eps}
+\end{center}
+\caption{Auto Mode Type Cycleの設定画面}
+\label{fig:notifauthAutoCycle}
+\end{minipage}
+\end{figure}
+
+次に，各設定方法の概要を説明する．
+
+Auto Mode Type Termでは，画面上段の「CONDITION」においてスライダーを用いて「From」(どのくらい前のツイートから秘密情報とするか)と「Term」(Fromからどのくらいの期間のツイートを秘密情報とするか)を設定する．
+各スライダーの最大値は，Notifauthによって取得しデータベースに保持されているツイートの中から最も古いものを基準として用いる．
+また，画面下段の「EXAMPLE」に，秘密情報として該当するツイートの一部(1行目が最古のもの，3行目が最新のもの，2行目はツイート群の配列の中央値のもの)を表示し，ユーザの設定を補助する．
+
+Auto Mode Type Cycleでは，画面上段の「CONDITION」においてピッカーを用いて「Time slot」(1時間単位で，何時のツイートを秘密情報とするか)を，セレクターを用いて「Weekday」(何曜日のツイートを秘密情報とするか)を設定する．
+また，画面中断の「EXAMPLE」に，秘密情報として該当するツイートの一部(1行目が最古のもの，3行目が最新のもの，2行目はツイート群の配列の中央値のもの)を表示し，画面下段の「SUGGESTION」にはNotifauthによって取得しデータベースに保持されているツイートの中で投稿回数が多い曜日・時間の組み合わせを上位3つ表示する．
+これらを参考にすることでユーザの設定を補助する．
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthManual.eps}
+\end{center}
+\caption{Manual Modeの設定画面}
+\label{fig:notifauthManual}
+\end{figure}
+
+Manual Modeでは，直近のツイートを最大200件取得し，これのうちどれを秘密情報とするかを手動で選択し設定する．
+ここで設定したツイートは，もう一度設定しない限りは実験終了まで固定されたままである．
+
+\subsection{認証操作}
 認証操作としてiOSに実装されているロック画面上の通知とその選択操作(図\ref{fig:notificationSliding}\footnote{この場面ではスライドすることでロック解除後に受信したメールをすぐに読むことができる})を踏襲したものを採用した．
 理由として，
 \begin{enumerate}
@@ -51,7 +109,7 @@
 \item ロック画面で通知をスライドし選択する動作はiOS標準の機能であり，ユーザへ新たな操作を覚えさせる負担が少ないと考えたため
 \end{enumerate}
 が挙げられる．
-また，実験を行いやすくするために本論文中の実装では，上記のロック画面を模した環境をアプリケーション内に実装した．
+また，実験を行いやすくするために本論文中の実装では，上記のロック画面を模した環境(図\ref{fig:notifauthNotificationTest}，図\ref{fig:notifauthPINTest})をアプリケーション内に実装した．
 
 \begin{figure}[ht]
 \begin{center}
@@ -61,15 +119,61 @@
 \label{fig:notificationSliding}
 \end{figure}
 
-\section{具体的特徴}\label{sec:feature}
+\begin{figure}[ht]
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthNotificationTest.eps}
+\end{center}
+\caption{ロック画面における通知の表示画面を模した認証画面}
+\label{fig:notifauthNotificationTest}
+\end{minipage}
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[width=60mm]{img/notifauthPINTest.eps}
+\end{center}
+\caption{ロック画面におけるPINの入力画面を模した認証画面}
+\label{fig:notifauthPINTest}
+\end{minipage}
+\end{figure}
 
-%\begin{figure}[th]
-%\begin{center}
-%\epsfig{file=img/Lissajous_UEC_logo.eps,scale=0.50}
-%\caption{リサージュ図形}
-%\end{center}
-%\label{fig:lissajous}
-%\end{figure}
+\subsection{前提条件}
+\begin{table}[htpb]
+\begin{center}
+\caption{必要環境等}
+\label{tbl:requirements}
+\vspace{4mm}
+\begin{tabular}{l||c|r}
+必要条件 & iOS7を利用し，Twitterアカウントを保持していること \\
+事前準備 & TwitterのOAuthを用いて本ソフトウェアと連携する \\
+実装環境 & Mac OSX 10.9, Xcode5 \\
+動作確認環境 & iPhone 4，iPhone 4S，iPhone 5，iPhone 5S，iPod touch \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{具体的特徴}\label{sec:feature}
+\subsection{時間経過による秘密情報の変化}
+Auto Mode Type Termにおいて，設定を行った時から時間が経過すると秘密情報とするツイートが入れ替わる場合がある．
+これが成立することの利点としては，
+\begin{itemize}
+\item 定期的な秘密情報の変更を能動的に行う必要が低減される
+\item 設定した期間等が秘匿されている限り，出現頻度による攻撃がしにくくなる可能性がある
+\end{itemize}
+が挙げられる．
+
+また，Auto Mode Type Cycleにおいては，
+\begin{itemize}
+\item 新たな秘密情報の候補が出現することで，統計的手法を用いた攻撃に対し強度が高くなる可能性がある
+\end{itemize}
+ということも利点として考えられる．
+
+欠点としては以下のようなものが挙げられる．
+\begin{itemize}
+\item ユーザの本人認証率が下がる可能性がある
+\item 期間の設定やツイートの頻度によっては，ダミーの数が減りすぎることで，統計的手法を用いた攻撃に脆弱になる恐れがある
+\end{itemize}
+
+本研究では，以上の利点が本当に作用するかどうかの検証実験も行った．
 
 \newpage
 
