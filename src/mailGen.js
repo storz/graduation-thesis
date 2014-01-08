@@ -1,11 +1,12 @@
 var date = require('date-utils');
 var _ = require('underscore');
 var longjohn = require('longjohn');
+var iconv = require('iconv').Iconv('UTF-8', 'ISO-2022-JP');
 var mail = require('mail').Mail({
 	host: 'smtp.gmail.com',
 	username: 'satorutakanami@gmail.com',
 	password: 'Nostrilium3106',
-	insecureAuth: false,
+	insecureAuth: false
 });
 var path = require('path');
 var users = require(path.dirname(process.argv[1]) + '/users.js').users;
@@ -75,7 +76,7 @@ function sendMail (to, subject, body) {
 			from: 'satorutakanami@gmail.com',
 			to: to,
 			subject: '[Notifauth]=?ISO-2022-JP?B?GyRCPEI4MyROJCpDTiRpJDsbKEI=?=(' + today + ')',
-		}).body(body).send(function (error) {
+		}).body(iconv.convert(body).toString()).send(function (error) {
 			if (error) {
 				//throw error;
 			}
