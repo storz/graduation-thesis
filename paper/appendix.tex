@@ -1,0 +1,121 @@
+\appendix
+\chapter{実装に関する付録}\label{apdx:app}
+\section{実装コード}\label{apdx:code}
+Mac OSXのXcode 5上にて，Objective-Cを用いて実装した．
+ソースコード等を含めたXcodeプロジェクトの各ファイルは，\url{https://github.com/storz/Notifauth}へ設置し，MITライセンスにより配布している．
+
+\section{画面一覧}\label{apdx:screen}
+\begin{figure}[ht]
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=40mm]{img/notifauthHome.eps}
+    \end{center}
+    \caption{Notifauth起動時の画面}
+    \label{fig:notifauthHome}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=40mm]{img/notifauthLogin.eps}
+    \end{center}
+    \caption{Notifauthユーザ登録画面}
+    \label{fig:notifauthLogin}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=40mm]{img/notifauthPIN.eps}
+    \end{center}
+    \caption{Notifauth設定時のPIN登録画面}
+    \label{fig:notifauthPIN}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=40mm]{img/notifauthResult.eps}
+    \end{center}
+    \caption{Notifauth認証終了時の画面}
+    \label{fig:notifauthResult}
+  \end{minipage}
+\end{figure}
+
+\chapter{実験に関する付録}\label{apdx:experiment}
+\section{スケジュール番号}\label{apdx:schedule}
+\begin{table}[ht]
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \small
+      \begin{tabular}{l|c} \hline
+        スケジュール番号 & 順番 \\ \hline
+        0 & A→B→C→D \\
+        1 & A→B→D→C \\
+        2 & A→C→B→D \\
+        3 & A→C→D→B \\
+        4 & A→D→B→C \\
+        5 & A→D→C→B \\
+        6 & B→A→C→D \\
+        7 & B→A→D→C \\
+        8 & B→C→A→D \\
+        9 & B→C→D→A \\
+        10 & B→D→A→C \\
+        11 & B→D→C→A \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \small
+      \begin{tabular}{l|c} \hline
+        スケジュール番号 & 順番 \\ \hline
+        12 & C→A→B→D \\
+        13 & C→A→D→B \\
+        14 & C→B→A→D \\
+        15 & C→B→D→A \\
+        16 & C→D→A→B \\
+        17 & C→D→B→A \\
+        18 & D→A→B→C \\
+        19 & D→A→C→B \\
+        20 & D→B→A→C \\
+        21 & D→B→C→A \\
+        22 & D→C→A→B \\
+        23 & D→C→B→A \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+\end{table}
+\begin{description}
+  \item[A]：Auto Mode Type Term
+  \item[B]：Auto Mode Type Cycle
+  \item[C]：Manual Mode
+  \item[D]：PIN Mode
+\end{description}
+
+\newpage
+
+\section{評価実験の概要説明資料}
+\includegraphics[width=13cm]{resource/intro_1.ps}
+\newpage
+\includegraphics[width=13cm]{resource/intro_2.ps}
+\newpage
+
+\section{Notifauth操作マニュアル}
+\includegraphics[width=13cm]{resource/manual_1.pdf}
+\newpage
+\includegraphics[width=13cm]{resource/manual_2.pdf}
+\newpage
+\includegraphics[width=13cm]{resource/manual_3.pdf}
+\newpage
+
+\section{評価実験における中間アンケート}\label{apdx:interimEnquete}
+\includegraphics[width=13cm]{resource/enquete_interim_1.ps}
+\newpage
+\includegraphics[width=13cm]{resource/enquete_interim_2.ps}
+\newpage
+\includegraphics[width=13cm]{resource/enquete_interim_3.ps}
+\newpage
+\includegraphics[width=13cm]{resource/enquete_interim_4.ps}
+\newpage
+\includegraphics[width=13cm]{resource/enquete_interim_5.ps}
+\newpage
+
+\section{評価実験における最終アンケート}\label{apdx:finalEnquete}
