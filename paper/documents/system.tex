@@ -1,48 +1,6 @@
 \chapter{Twitter上の情報を用いた提案認証システム}\label{chap:system}
-\section{既存システムの問題点}
-既存のライフログを用いた認証方式の問題点として，
-\begin{enumerate}
-  \item 本人の趣味趣向を真似ることによってなりすましが行いやすい(Web履歴を用いた認証)
-  \item GPSのデータを逐一送信できないと認証の安全性が確保できない(GPSを用いた認証)
-  \item 重要であったりプライベートなメールが認証時に表示されてしまうことで，情報漏洩やプライバシー情報流出の可能性がある(電子メールを用いた認証)
-  \item メッセージ機能を用いて秘密の質問を定期的に更新しているだけで，SNS上でそれを実行する必要性が希薄である(TwitterのDirect Messageを用いた認証)
-  \item 友人が自分の顔にのみタグ付けしているという保証がなく(他の動物や物体にも名前のタグ付けが可能)，その場合答えられないという状況が発生しうる(友人の顔写真を用いた認証)
-\end{enumerate}
-などが挙げられる．
-
-\section{採用手法の概要}
-前節の問題点するためには，それらを3つに大別した上でそれぞれについて以下のような改善策を用意できると考えた．
-\begin{itemize}
-  \item 安全性が損なわれる状況が存在する(1,2)：特定の趣向や環境に依存しにくい情報を利用する
-  \item 認証時に問題が生じる(3,5)：ある程度公開されている情報を用いたり，イレギュラーをフィルタリングしやすいように文字情報を主として用いる
-  \item 利便性について提案以前の状態から改善できていない(4)：能動的に憶えるのではなく，憶えていることを認証に利用する
-\end{itemize}
-そして提案システムではSNSの情報，今回はTwitter上にある自分のツイートを利用することで上記の改善策を取り入れることができると考えた．
-積極的理由として，
-\begin{enumerate}
-\item 能動的な行為によって生成される情報であり，記憶のための負担に配慮可能なこと
-\item 生成された日時の詳細が確実に取得でき，時系列を提示することにより記憶を思い出しやすいこと
-\end{enumerate}
-が挙げられ，他にも考えうる手段としては以下の様なものがあったが，記載の問題点により前述の手法をとることにした．
-\begin{itemize}
-  \item 音楽を用いて認証を行う方法
-  \begin{itemize}
-    \item 外部の騒音などにより認証を行いにくい場面が存在する
-    \item 趣味趣向に大きく依存してしまう
-  \end{itemize}
-  \item Twitterのお気に入り情報を用いる手法
-  \begin{itemize}
-    \item お気に入りに登録した日時が取得できない
-    \item お気に入りに登録したツイートが投稿者により削除される可能性がある
-  \end{itemize}
-\end{itemize}
-
-また，時系列における情報を保持していることの特徴として，時間情報によって範囲を指定することで，秘密となる情報群を抽出することができるというものがある．
-また，相対的な時間情報の指定を行うことで秘密情報の対象を自動で入れ替えることが可能となる．
-これによる具体的な利点は\ref{sec:feature}節にて示す．
-
-\section{システムの詳細}
-本論文における提案システムとして，前節の内容を踏まえて，利便性(憶えやすさ/使いやすさ)と安全性の両立を目指した個人認証手法を実装した(以下Notifauth)．
+\section{システムの概要}
+本論文における提案システムとして，前章の内容を踏まえて，利便性(憶えやすさ/使いやすさ)と安全性の両立を目指した個人認証手法を実装した(以下Notifauth)．
 Notifauth起動時の画面は図\ref{fig:notifauthHome}のようになっており，この画面から新規登録画面(図\ref{fig:notifauthLogin})\footnote{Twitterと連携するためOAuthを用いた}への遷移，設定画面への遷移，実験の試行を開始，実験結果の送信を行うことが可能となっている．
 
 \subsection{秘密情報の設定}\label{subsec:selectSecret}
@@ -138,15 +96,46 @@ Manual Modeでは，直近のツイートを最大200件取得し，これのう
     \caption{必要環境等}
     \label{tbl:requirements}
     \vspace{4mm}
-    \begin{tabular}{l||c}
+    \begin{tabular}{|l||c|}
+    \hline
     必要条件 & iOS7を利用し，Twitterアカウントを保持していること \\
     推奨条件 & 定期的に複数のツイートを行っていること \\
     事前準備 & TwitterのOAuthを用いて本ソフトウェアと連携する \\
     実装環境 & Mac OSX 10.9, Xcode5 \\
     動作確認環境 & iPhone 4，iPhone 4S，iPhone 5，iPhone 5S，iPod touch \\
+    \hline
     \end{tabular}
   \end{center}
 \end{table}
+
+\section{実装の詳細}
+%(実装に関しては〜のはなし．クラス図とか概略図を入れたほうがよさそう)
+Notifauthは，iOS用アプリケーションとして実装された．
+クラス図は図\ref{fig:notifauthClass}の通りである．
+
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=img/notifauthClass.eps,scale=0.2}
+  \end{center}
+  \caption{Notifauthのクラス図}
+  \label{fig:notifauthClass}
+\end{figure}
+
+Twitterの認証情報(OAuthの認証トークン)は，Apple社の``Keychain''により，暗号化し保存されている．
+ツイートのデータは，Object-relational mapping(以降ORM)フレームワークであるCoreDataを用いてSQLiteファイルに保存されている．
+また，Notifauth内の様々な設定情報はiOS標準のNSUserDefaultsオブジェクトを利用しアプリケーションソフトウェア内の専用領域に保存されており．今回は特に暗号化は行っていない．
+
+使用したサードパーティ製ライブラリは
+\begin{itemize}
+\item MagicalRecord
+\item MKNetworkKit
+\item RSOAuthEngine
+\item RSTwitterEngine
+\item NSDate-Utilities
+\end{itemize}
+である．
+
+ソースコードは付録\ref{apdx:code}にある通り，Webで一般公開されている．
 
 \section{具体的特徴}\label{sec:feature}
 \subsection{時間経過による秘密情報の変化}
