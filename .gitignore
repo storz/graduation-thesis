@@ -6,5 +6,6 @@ paper/*
 experimentData
 rawData
 reference_
-docs
+docs/*
+!test.xlsx
 users.js
