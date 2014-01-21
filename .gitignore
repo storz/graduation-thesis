@@ -7,5 +7,9 @@ experimentData
 rawData
 reference_
 docs/*
+!manual.pdf
+!intro.pdf
+!agreements.pdf
+drive
 !test.xlsx
 users.js

@@ -46,7 +46,7 @@ users.forEach(function (user) {
 			var daysDiff = Math.round(hourDiff/24);
 			if (daysDiff === 9) daysDiff = 8;
 			var result = [
-				user.name,
+				'Anonymous',//user.name, NOTICE:Don't show for privacy
 				userId,
 				pattern,
 				d.date,
@@ -75,8 +75,7 @@ users.forEach(function (user) {
 				case 'pin':
 					pinOutput.push(result);
 					break;
-			*/
-			}
+			}*/
 		})
 	}
 });
@@ -91,7 +90,8 @@ function convertToCSV (twoDimArr) {
 
 console.log(allDataOutput)
 
-fs.writeFile(rootDir + '/docs/full_data.csv', convertToCSV(allDataOutput), 'utf8');
+fs.writeFile(rootDir + '/drive/full_data.csv', convertToCSV(allDataOutput), 'utf8');
+fs.writeFile('/Users/storz/Dropbox/Public/_docs/full_data.csv', convertToCSV(allDataOutput), 'utf8');
 /*
 fs.writeFile(rootDir + '/docs/auto_term.csv', convertToCSV(autoTermOutput), 'utf8');
 fs.writeFile(rootDir + '/docs/auto_cycle.csv', convertToCSV(autoCycleOutput), 'utf8');
