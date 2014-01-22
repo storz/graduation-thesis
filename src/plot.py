@@ -32,7 +32,7 @@ plot.yticks(np.arange(0, 1.1, 0.1), [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Success (%)')
-plot.savefig('ex_manual_vs_pin_rate.pdf')
+plot.savefig('data/ex_manual_vs_pin_rate.pdf')
 #plot.show()
 
 #################
@@ -49,7 +49,7 @@ plot.xticks(x, xt)
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Time (seconds)')
-plot.savefig('ex_manual_vs_pin_time.pdf')
+plot.savefig('data/ex_manual_vs_pin_time.pdf')
 #plot.show()
 
 ################
@@ -66,7 +66,7 @@ plot.yticks(np.arange(0, 1.1, 0.1), [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Success (%)')
-plot.savefig('ex_auto_term_vs_pin_rate.pdf')
+plot.savefig('data/ex_auto_term_vs_pin_rate.pdf')
 #plot.show()
 
 #################
@@ -83,7 +83,7 @@ plot.xticks(x, xt)
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Time (seconds)')
-plot.savefig('ex_auto_term_vs_pin_time.pdf')
+plot.savefig('data/ex_auto_term_vs_pin_time.pdf')
 #plot.show()
 
 ################
@@ -91,7 +91,7 @@ plot.savefig('ex_auto_term_vs_pin_time.pdf')
 fig_auto_cycle_vs_pin_rate = plot.figure(5, figsize=(12, 6), dpi=80)
 fig_auto_cycle_vs_pin_rate.subplots_adjust(bottom=0.33)
 
-plot.bar(x - w/2, date_rate[:,2], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
+plot.bar(x - w/2, date_rate[:,1], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
 plot.bar(x + w/2, date_rate[:,3], width=w, label='PIN Mode',  hatch='.', fill=False, edgecolor='black', align='center')
 
 plot.legend(bbox_to_anchor=(0.5, -0.5), loc='lower center', borderaxespad=0, fancybox=True)
@@ -100,7 +100,7 @@ plot.yticks(np.arange(0, 1.1, 0.1), [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Success (%)')
-plot.savefig('ex_auto_cycle_vs_pin_rate.pdf')
+plot.savefig('data/ex_auto_cycle_vs_pin_rate.pdf')
 #plot.show()
 
 #################
@@ -108,7 +108,7 @@ plot.savefig('ex_auto_cycle_vs_pin_rate.pdf')
 fig_auto_cycle_vs_pin_rate = plot.figure(6, figsize=(12, 6), dpi=80)
 fig_auto_cycle_vs_pin_rate.subplots_adjust(bottom=0.33)
 
-plot.bar(x - w/2, date_time[:,2], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
+plot.bar(x - w/2, date_time[:,1], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
 plot.bar(x + w/2, date_time[:,3], width=w, label='PIN Mode',  hatch='.', fill=False, edgecolor='black', align='center')
 
 plot.legend(bbox_to_anchor=(0.5, -0.5), loc='lower center', borderaxespad=0, fancybox=True)
@@ -117,5 +117,39 @@ plot.xticks(x, xt)
 
 plot.xlabel('Days passed since set up')
 plot.ylabel('Time (seconds)')
-plot.savefig('ex_auto_cycle_vs_pin_time.pdf')
+plot.savefig('data/ex_auto_cycle_vs_pin_time.pdf')
+#plot.show()
+
+#################
+
+fig_auto_term_vs_auto_cycle_rate = plot.figure(7, figsize=(12, 6), dpi=80)
+fig_auto_term_vs_auto_cycle_rate.subplots_adjust(bottom=0.33)
+
+plot.bar(x - w/2, date_rate[:,0], width=w, label='Auto Mode Type Term', hatch='/', fill=False, edgecolor='black', align='center')
+plot.bar(x + w/2, date_rate[:,1], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
+
+plot.legend(bbox_to_anchor=(0.5, -0.5), loc='lower center', borderaxespad=0, fancybox=True)
+plot.xticks(x, xt)
+#plot.yticks(np.arange(0, 1.1, 0.1), [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+
+plot.xlabel('Days passed since set up')
+plot.ylabel('Success (%)')
+plot.savefig('data/ex_auto_term_vs_auto_cycle_rate.pdf')
+#plot.show()
+
+#################
+
+fig_auto_term_vs_auto_cycle_time = plot.figure(8, figsize=(12, 6), dpi=80)
+fig_auto_term_vs_auto_cycle_time.subplots_adjust(bottom=0.33)
+
+plot.bar(x - w/2, date_time[:,0], width=w, label='Auto Mode Type Term', hatch='/', fill=False, edgecolor='black', align='center')
+plot.bar(x + w/2, date_time[:,1], width=w, label='Auto Mode Type Cycle', hatch='-', fill=False, edgecolor='black', align='center')
+
+plot.legend(bbox_to_anchor=(0.5, -0.5), loc='lower center', borderaxespad=0, fancybox=True)
+plot.xticks(x, xt)
+#plot.yticks(np.arange(0, 1.1, 0.1), [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+
+plot.xlabel('Days passed since set up')
+plot.ylabel('Time (seconds)')
+plot.savefig('data/ex_auto_term_vs_auto_cycle_time.pdf')
 #plot.show()

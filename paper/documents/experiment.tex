@@ -17,7 +17,7 @@
   \item 実験担当者が実験の目的・注意事項・免責事項を説明する．この手順は付録\ref{apdx:experiment}の実験説明資料と操作説明資料を用いて行う．
   \item 不明な点があれば質問してもらう．
   \item 被験者のスケジュールを決定し，それに合わせて提案システムを実装したアプリケーションソフトウェア(以降「Notifauth」と記載する)のソースコードにスケジュール番号を登録する．
-  \item 実験担当者の開発用端末と被験者の携帯端末を接続し，Appleの開発者用アカウントと被験者の端末の紐付けを行った上でNotifauthをインストールする．
+  \item 実験担当者の開発用端末と被験者の携帯端末を接続し，Notifauthをインストールする\footnote{ここでAppleの開発者用アカウントと被験者の端末の紐付けを行う}．
   \item 実際にNotifauthを操作し，全てのパターンでひと通りの秘密情報設定と認証操作を行ってもらう．
   \item その後，Notifauth内の全ての保存されたデータを初期化し，スケジュールに沿ったパターンのみ設定を行ってもらうことで実験開始とする．
   \item 上記手順で設定したパターンについて認証操作を行ってもらう．
@@ -50,26 +50,39 @@
 中間アンケートには○人が回答した．
 
 \begin{table}[ht]
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.3\hsize}
     \begin{center}
       \small
-      \begin{tabular}{l|r} \hline
-        性別 \\ \hline
+      \begin{tabular}{|l|r|} \hline
+        \multicolumn{2}{|l|}{性別} \\ \hline
         男性 & 15 \\
         女性 & 3 \\ \hline
       \end{tabular}
     \end{center}
   \end{minipage}
-  \begin{minipage}{0.5\hsize}
+  \begin{minipage}{0.3\hsize}
     \begin{center}
       \small
-      \begin{tabular}{l|r} \hline
-        年齢  \\ \hline
+      \begin{tabular}{|l|r|} \hline
+        \multicolumn{2}{|l|}{年齢} \\ \hline
         10代 & 0 \\
         20代 & 12 \\
         30代 & 2 \\
         40代 & 1 \\
         50代以上 & 0 \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.3\hsize}
+    \begin{center}
+      \small
+      \begin{tabular}{|l|r|} \hline
+        \multicolumn{2}{|l|}{1日の平均ツイート数} \\ \hline
+        0〜1 & 0 \\
+        2〜10 & 0 \\
+        11〜50 & 0 \\
+        50〜100 & 0 \\
+        100〜 & 0 \\ \hline
       \end{tabular}
     \end{center}
   \end{minipage}
@@ -86,13 +99,13 @@
 \begin{itemize}
   \item 短期の記憶保持
     \begin{description}
-      \item[測定方法] 0日目，1日目，3日目の認証成功率を比較し，有意差をみる．
+      \item[測定方法] 0日目，1日目，3日目の認証成功率を比較し，相関をみる．
       \item[意義] 短期に記憶が保持できなければ，使用の継続が難しくなってしまうため．
       \item[目標] 5桁のPIN認証よりも平均での認証率が高く，日数によって認証成功率が落ちにくいことを目指す．
     \end{description}
   \item 長期の記憶保持
     \begin{description}
-      \item[測定方法] 3日目と8日目の認証成功率を比較し，有意差をみる．
+      \item[測定方法] 3日目と8日目の認証成功率を比較し，相関をみる．
       \item[意義] 長期に記憶が保持できなければ，該当の認証を使わない期間が存在した際に認証できず，ユーザに秘密情報の再設定などの負担を与えてしまうため．
       \item[目標] 5桁のPIN認証よりも平均での認証率が高く，日数によって認証成功率が落ちにくいことを目指す．
     \end{description}
@@ -103,6 +116,8 @@
       \item[目標] 5桁のPIN認証よりも認証時間が短いことを目指す．
     \end{description}
 \end{itemize}
+
+また，有意差はWhelchのt検定を用いる(この場合標本が正規分布であることは自明とした[FIX: 自明じゃないのでマン・ホイットニーのU検定にするかも])
 
 \subsection{方法}
 被験者実験により各試行の成功と失敗，認証にかかった時間を収集する．
@@ -115,11 +130,13 @@
   \begin{center}
     \small
     \begin{tabular}{|r|r|r|} \hline
-      経過日数 & 認証成功率(\%) & 認証時間\\ \hline
+      経過日数 & 認証成功率(\%) & 認証時間(秒)\\ \hline
       0 & 90.0 & 17.05 \\
-      1~2 & 88.9 & 11.86 \\
-      3~6 & 88.9 & 9.82 \\
-      7~8 & 100.0 & 10.11 \\ \hline
+      1〜2 & 88.9 & 11.86 \\
+      3〜6 & 88.9 & 9.82 \\
+      7〜8 & 100.0 & 10.11 \\ \hline \hline
+      平均 & 91.89 & 12.34 \\
+      標準偏差 & 4.67 & 9.56 \\ \hline
     \end{tabular}
   \end{center}
   \caption{Manual Modeにおける各経過日数ごとの認証成功率と認証時間の変化}
@@ -142,14 +159,55 @@
   \label{fig:ex_manual_vs_pin_time}
 \end{figure}
 
-\subsubsection{短期の記憶保持}
+\subsubsection{記憶保持}
+表\ref{tab:manual.data}に示した通り，経過日数と認証成功率におけるピアソンの相関係数は0.8813で，標本数による限界値\cite{978-4641121607}を考慮すると有意ではないと考えられる．
+また，図\ref{fig:ex_manual_vs_pin_rate}にPIN Modeとの認証率の比較を示した．
+検定を行った結果，PIN Modeの認証成功率とは有意差がある(Welchのt検定，p=0.00$<$0.01)ことが明らかになった．
+\begin{itemize}
+  \item 短期の記憶保持
+\end{itemize}
+0日目から3日目までのManual Modeでの認証成功率は88.9\%から90\%と高く，標本数が少ないため，相関に関しての検定は省略する．
+以上の結果から，短期の記憶保持にはあまり問題がないと考えた．
 
-
-\subsubsection{長期の記憶保持}
-
+\begin{itemize}
+  \item 長期の記憶保持
+\end{itemize}
+3日目の認証成功率は90\%で，8日目には100\%であったため，長期的な記憶保持にはあまり問題がないと考えた．
+本項目も標本数が少ないため，相関に関しての検定は省略する．
 
 \subsubsection{認証時間}
+図\ref{fig:ex_manual_vs_pin_time}にManual ModeとPIN Modeとの認証時間の比較を示した．
+PIN Modeとは大きく差があり，検定を行った結果，有意差がある(Welchのt検定，p=0)といえた．
 
+\subsubsection{アンケート結果}
+\begin{table}[ht]
+  \begin{center}
+    \small
+    \begin{tabular}{|r|r|} \hline
+      項目名 & 平均値 \\ \hline
+      秘密情報の記憶保持にかかわる負担はどのくらい感じますか？ & 2.2 \\
+      認証にかかる時間はどのように感じましたか？ & 3.4 \\
+      認証を成功させるために必要な操作負担はどの程度でしたか？ & 2.3 \\
+      認証を行うのにどれくらいフラストレーションを感じましたか？ & 4.2 \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{被験者によるManual Modeに対するアンケート内評価}
+  \label{tab:manual.enquete}
+\end{table}
+\begin{table}[ht]
+  \begin{center}
+    \small
+    \begin{tabular}{|r|r|} \hline
+      項目名 & 平均値 \\ \hline
+      秘密情報の記憶保持にかかわる負担はどのくらい感じますか？ & 2.2 \\
+      認証にかかる時間はどのように感じましたか？ & 3.4 \\
+      認証を成功させるために必要な操作負担はどの程度でしたか？ & 2.3 \\
+      認証を行うのにどれくらいフラストレーションを感じましたか？ & 4.2 \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{被験者によるPIN Modeに対するアンケート内評価}
+  \label{tab:pin.enquete}
+\end{table}
 
 \section{時系列における期間を秘密として用いることに関する評価実験}\label{sec:vsTerm}
 \subsection{目的}
@@ -197,14 +255,45 @@
   \label{fig:ex_auto_term_vs_pin_time}
 \end{figure}
 
-\subsubsection{短期の記憶保持}
+\subsubsection{記憶保持}
+表\ref{tab:auto_term.data}に示した通り，経過日数と認証成功率におけるピアソンの相関係数は0.8813で，標本数による限界値を考慮すると有意ではないと考えられる．
+また，図\ref{fig:ex_auto_term_vs_pin_rate}にPIN Modeとの認証率の比較を示した．
+検定を行った結果，PIN Modeの認証成功率とは有意差がある(Welchのt検定，p=0)ことが明らかになった．
+\begin{itemize}
+  \item 短期の記憶保持
+\end{itemize}
+0日目から3日目までのManual Modeでの認証成功率は50.00\%から85.71\%とばらつきが見られたが，0日目と1日目の認証成功率が低いにも関わらず3日目で上昇しているのは，設定した条件は記憶していたもののうまく候補の中から当てることが出来なかった可能性がある．
+この結果に関しては標本数が少ないため，相関に関しての検定は省略する．
+以上の結果から，PIN認証と比べて劣ることが明らかとなった．
 
-
-\subsubsection{長期の記憶保持}
-
+\begin{itemize}
+  \item 長期の記憶保持
+\end{itemize}
+3日目の認証成功率は85\%，8日目の認証成功率は66.67\%で，期間が空くと認証成功率が下がってしまった．
+このため，長期的な記憶持続性に関しても，PINを用いたものより劣ると考えられる．
+本項目も標本数が少ないため，相関に関しての検定は省略する．
 
 \subsubsection{認証時間}
+図\ref{fig:ex_auto_term_vs_pin_time}にPIN Modeとの認証時間の比較を示した．
+こちらもManual Mode同様，PIN Modeとは大きく差があり，検定を行った結果，有意差がある(Welchのt検定，p=0)ことが判明した．
 
+\subsubsection{アンケート結果}
+被験者によるアンケート結果を表\ref{tab:manual.enquete}に記す．
+以下の結果より，被験者にとって〜〜〜であることが考えられる．
+\begin{table}[ht]
+  \begin{center}
+    \small
+    \begin{tabular}{|r|r|} \hline
+      項目名 & 平均値 \\ \hline
+      秘密情報の記憶保持にかかわる負担はどのくらい感じますか？ & 2.2 \\
+      認証にかかる時間はどのように感じましたか？ & 3.4 \\
+      認証を成功させるために必要な操作負担はどの程度でしたか？ & 2.3 \\
+      認証を行うのにどれくらいフラストレーションを感じましたか？ & 4.2 \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{被験者によるAuto Mode Type Termに対するアンケート内評価}
+  \label{tab:auto_term.enquete}
+\end{table}
 
 \section{時系列における周期を秘密として用いることに関する評価実験}\label{sec:vsCycle}
 \subsection{目的}
@@ -252,17 +341,46 @@
   \label{fig:ex_auto_cycle_vs_pin_time}
 \end{figure}
 
-\subsubsection{短期の記憶保持}
+\subsubsection{記憶保持}
+表\ref{tab:auto_cycle.data}に示した通り，経過日数と認証成功率におけるピアソンの相関係数は0.8813で，標本数による限界値を考慮すると有意ではないと考えられる．
+また，図\ref{fig:ex_auto_cycle_vs_pin_rate}にPIN Modeとの認証率の比較を示した．
+検定を行った結果，PIN Modeの認証成功率とは有意差がある(Welchのt検定，p=0)ことが明らかになった．
+\begin{itemize}
+  \item 短期の記憶保持
+\end{itemize}
+0日目から3日目までのAuto Mode Type Cycleにおける認証成功率は33.00\%から0\%まで落ち，一般的なPIN認証よりもかなり低く実用的ではないことが自明である．
+だが，設定直後のエラー率が高いので，
+この結果に関しては標本数が少ないため，相関に関しての検定は省略する．
 
-
-\subsubsection{長期の記憶保持}
-
+\begin{itemize}
+  \item 長期の記憶保持
+\end{itemize}
+3日目の認証成功率は0\%，8日目の認証成功率は16.67\%で，3日目で全員が失敗したのにその後回答に成功した被験者がいたということは，こちらも同様に設定した条件は記憶していたもののうまく候補の中から当てることが出来なかった可能性がある．
+本項目においても明らかにPIN Modeよりも記憶保持の面においてが劣るが，標本数が少ないため，相関に関しての検定は省略する．
 
 \subsubsection{認証時間}
+図\ref{fig:ex_auto_cycle_vs_pin_time}にPIN Modeとの認証時間の比較を示した．
+こちらも他のMode同様，PIN Modeとは大きく差があり，検定を行った結果，有意差がある(Welchのt検定，p=0)ことが判明した．
 
+\subsubsection{アンケート結果}
+被験者によるアンケート結果を表\ref{tab:auto_cycle.enquete}に記す．
+以下の結果より，被験者にとって〜〜〜であることが考えられる．
+\begin{table}[ht]
+  \begin{center}
+    \small
+    \begin{tabular}{|r|r|} \hline
+      項目名 & 平均値 \\ \hline
+      秘密情報の記憶保持にかかわる負担はどのくらい感じますか？ & 2.2 \\
+      認証にかかる時間はどのように感じましたか？ & 3.4 \\
+      認証を成功させるために必要な操作負担はどの程度でしたか？ & 2.3 \\
+      認証を行うのにどれくらいフラストレーションを感じましたか？ & 4.2 \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{被験者によるAuto Mode Type Cycleに対するアンケート内評価}
+  \label{tab:auto_cycle.enquete}
+\end{table}
 
-
-\section{各評価実験での相互比較}\label{sec:vsAll}
+\section{各評価実験間での相互比較}\label{sec:vsAll}
 \subsection{目的}
 本節では，各評価実験で行ったパターン全てのなかで比較を行う．
 
@@ -271,7 +389,32 @@
 また，付録の\ref{apdx:interimEnquete}や\ref{apdx:finalEnquete}にある通り，被験者には使用パターンについて5段階のリッカート尺度を使った質問に答えてもらい，さらに既に8日間の試行が終了している他パターンとの比較もしてもらう．
 
 \subsection{結果}
+\subsubsection{期間と周期での比較}
+図\ref{fig:ex_auto_term_vs_auto_cycle_rate}と図\ref{fig:ex_auto_term_vs_auto_cycle_time}にAuto Modeの2タイプにおけるそれぞれの経過日数ごとの認証成功率と認証時間を示す．
+認証の成功率に関しては，有意差は見られなかった(Welchのt検定においてp=0.067)．
+認証の成功時間に関しては，有意な差は見られなかった(Welchのt検定においてp=1)．
+この結果から，
+\begin{itemize}
+  \item 認証の成功率はAuto Mode Type Termの方が全日程において勝っているが，この差は有意ではない．
+  \item 認証時間は大きく変わらず，差も有意ではない．
+\end{itemize}
+ということが判明した．
 
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=resource/ex_auto_term_vs_auto_cycle_rate.pdf,scale=0.5}
+  \end{center}
+  \caption{Auto Mode Type TermとAuto Mode Type Cycleにおける設定時からの経過日数ごとの認証成功率}
+  \label{fig:ex_auto_term_vs_auto_cycle_rate}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=resource/ex_auto_term_vs_auto_cycle_time.pdf,scale=0.5}
+  \end{center}
+  \caption{Auto Mode Type TermとAuto Mode Type Cycleにおける設定時からの経過日数ごとの認証時間}
+  \label{fig:ex_auto_term_vs_auto_cycle_time}
+\end{figure}
 
 \newpage
 
