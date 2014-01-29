@@ -2,25 +2,81 @@
 \section{多要素認証についての調査}
 %(PARCのやつ\cite{DBLP:journals/corr/CristofaroDFN13}とかのっける)
 \subsection{二要素認証のユーザビリティに関する比較調査}
-Hongluら\cite{DBLP:journals/corr/CristofaroDFN13}は，多要素認証の中でも二要素認証に着目し，主要な二要素認証手法の洗い出しと，それらのユーザビリティ(使いやすさ，信頼性，認識努力)の評価を行った．
-様々な相関を調べた結果，どの二要素認証が好まれるかは個人の特徴に左右されることが大きく，ターゲットとなるユーザを絞った設計を行わなければならないとした．
-また，二要素認証同士の比較であれば，安全性と利便性は逆の相関を持たないことも明らかにした．
+Hongluら\cite{DBLP:journals/corr/CristofaroDFN13}は，多要素認証の中でも二要素認証に着目し，主要な二要素認証手法の洗い出しと，それらのユーザビリティの評価を行った．
+まず最初に予備実験として9人にインタビュー形式で「いつ・どこで・なぜ・どのように二要素認証が使われるのか」を調べた．
+その結果，よく普及している二要素認証として
+\begin{itemize}
+  \item (ハードウェア)セキュリティトークンにより生成
+  \item EメールもしくはSMSを用いて受信
+  \item 専用のアプリケーションを用いて生成
+\end{itemize}
+して得られたコードを，ユーザIDとパスワードに加え入力する方式であるという結果を得た．
+また，その際のアンケートによる調査では，銀行や勤務している会社から強制的にセキュリティトークンを利用させられることや，SMSの送受信がうまく行われずに支払いが遅れることなどへ不満を持つ人の意見も得られた．
+
+次に，予備実験で得られた普及しているに要素認証について，(1)それを使用したことのある状況(金融・仕事・個人)と動機(任意・誘因・強制)，(2)15種類にわたる項目のリッカート尺度を用いた評価，についてオンライン調査を用いて219人から回答を得て，(2)に関しては，
+\begin{description}
+  \item[使いやすさ] 楽しい，便利，簡単，再利用，など
+  \item[信頼性] セキュア，信頼できる
+  \item[認識努力の必要度] いらいらする，指導が必要，集中が必要，など
+\end{description}
+の3つの基準に分類し最終的なスコアを算出した．
+その結果，(1)については
+\begin{itemize}
+  \item 会社などの環境では，ハードウェアのトークンが好まれる，
+  \item 金融や個人による使用では，EメールもしくはSMSを用いた二要素認証方式が多く用いられている
+  \item 既にハードウェアのトークンを利用しているユーザが携帯端末のアプリケーションによる二要素認証に移行することはほとんどない
+  \item 携帯端末のアプリケーションによる二要素認証はごく最近の技術だがセキュリティトークンよりも高い採用率を誇る
+\end{itemize}
+という結果が，(2)についてはどの二要素認証技術も高いユーザビリティ評価を獲得しているという結果が明らかになった．
+様々な相関を調べた結果，どの二要素認証が好まれるかは個人の特徴(年齢や性別)に左右されることが大きく，ターゲットとなるユーザを絞った導入を行わなければならないとした．
+また，二要素認証同士の比較であれば，安全性と利便性は逆の相関を持たない(安全性が高まれば必ずしも利便性が損なわれるわけではない)ことも明らかにし，先行研究と逆の結果となったのは，それらの大部分がパスワードとの比較によるものであったためであると結論づけた．
+加えて，本実験でのアンケートによる自由回答では，個人認証のプロセスが以下のような点を持つと，ユーザの不満が高まるとした．
+\begin{description}
+  \item[失敗しやすい] 例：``認証サーバが停止してしまっていた''
+  \item[厳しすぎる] 例：``認証に失敗すると入力を最初からやり直さなければならなかった''
+  \item[複雑] 例：``3回間違えるとPINのリセットのためにヘルプデスクに連絡しなければならなかった''
+\end{description}
 
 \section{認証の多要素化手法}\label{sec:multifactor}
 多要素認証においては，ワンタイムパスワードが多く使われる．
 ワンタイムパスワードの生成手法は複数あり，
 \begin{itemize}
 \item 数学的アルゴリズムを用いるもの：一方向性関数に初期シードを与えることで動作，パスワードを生成させる手法
-\item 時刻同期によるもの：認証サーバの時計と同期させ，その時刻に基づいてパスワードを生成する手法(RFC 6238\footnote{Time-Based One-Time Password Algorithm}による)
+\item 時刻同期によるもの：認証サーバの時計と同期させ，その時刻に基づいてパスワードを生成する手法
 \item トランザクション認証番号を用いるもの：ランダム生成されたパスワードのリストを用意し，それを消費してゆく手法
-\item EメールやSMSを使用するもの：EメールやSMSなどを経由してワンタイムパスワードを送信する手法
 \end{itemize}
 などが一般的である．具体的な応用例は以下に示す．
 
-\subsection{Google}
-Googleでは，アカウントにログインする際に複数の多要素化方式を用意している．
-一つはEメール/SMSを用いてワンタイムパスワードを送信する手法であり，これはログインの際にID/パスワードの入力が正しいものであれば携帯端末へ送信される．
-もう一つの方式として，携帯端末向けのワンタイムパスワード生成アプリケーション(図\ref{fig:googleAuthenticator})を公開しており，こちらはユーザ固有の秘密鍵とサーバからのメッセージを用いて30秒ごとにSHA1\footnote{アメリカ国家安全保障局によって設計されたハッシュ関数の一つ．SHAはSecure Hash Algorithmの略}を用いたHMAC(Hash-based Message Authentication Code\footnote{暗号ハッシュ関数に基づいたメッセージ認証符号．秘密鍵とメッセージとハッシュ関数により計算される．})を生成し，6桁の数字コードに変換している．
+\subsection{Google}\label{subsec:google2F}
+Googleでは，アカウントにログインするための認証の多要素化方法を実装している．
+図\ref{fig:google2F}にある通り，従来のID/パスワードによる認証方式に加え，以下に紹介する4つの方式のうちいずれか一つを組み合わせた二要素認証をサポートしており，いずれの方式もログインの際にID/パスワードの入力が正しいものであれば入力が可能となる．
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=140mm]{img/google2F.pdf}
+  \end{center}
+  \caption{Googleの多要素認証における概要図}
+  \label{fig:google2F}
+\end{figure}
+
+\subsubsection{SMSを用いてワンタイムパスワードを送信する方式}
+SMSを用いて，事前に登録された電話番号によりユーザの持っている携帯端末へワンタイムパスワードが送信される．
+
+\subsubsection{音声通話によりワンタイムパスワードを確認する方式}
+SMSではなく電話を利用して，機械音声でワンタイムパスワードを確認することが可能となっている．
+
+\subsubsection{携帯端末向けアプリケーションでワンタイムパスワードを生成する方式}
+``Google Authenticator''と呼ばれる携帯端末向けのワンタイムパスワード生成アプリケーション(図\ref{fig:googleAuthenticator})を公開しており，実装されている以下の2種類のワンタイムパスワード生成アルゴリズムは，どちらもWebの画面に表示された16文字のbase32文字列の入力もしくはQRコードを読み込むことで渡されるユーザ固有の秘密鍵と，特定の変数によりSHA1\footnote{アメリカ国家安全保障局によって設計されたハッシュ関数の一つ．SHAはSecure Hash Algorithmの略}を用いたHMAC(Hash-based Message Authentication Code\footnote{暗号ハッシュ関数に基づいたメッセージ認証符号．秘密鍵とメッセージとハッシュ関数により計算される．})を生成し，6桁の数字コードに変換するものであるが，そこに用いられる変数が異なっている．
+\begin{description}
+  \item[HOTP(HMAC-based One-Time Password)] 前述の``数学的アルゴリズムを用いる''生成手法であり，ボタンをタップすることで1つのワンタイムパスワードが生成されるが，その生成回数を変数として利用し生成する\footnote{RFC 4226 - ``HMAC-based One-Time Password Algorithm''にて規定}
+  \item[TOTP(Time-based One-Time Password)] 前述の``時間同期による''，HOTPを拡張した手法であり，サーバからのメッセージを用いて30秒ごとに変数を決定し生成する(この方式を用いた場合，30秒毎にワンタイムパスワードは更新される)\footnote{RFC 6238 - ``Time-based One-Time Password Algorithm''にて規定}
+\end{description}
+なお，いずれの手法もHOTPであれば回数が，TOTPであれば時刻が，クライアント側とサーバ側で同期している必要が存在する．
+ちなみに，上記の2アルゴリズムのいずれかを実装し，更にユーザ固有の秘密鍵を出力できるWebサービスならばこのアプリケーションを用いた認証の二要素化が可能となっている．
+
+\subsubsection{バックアップコードを予め保存しておく方式}
+SMSや音声通話の受信が難しい場合，もしくはGoogle Authenticatorを使えない場合にテキストファイルで7桁のワンタイムパスワードを出力する機能も実装されており，それらは10個を1セットとして出力され，1つにつき1回のみ利用できる．
+また，再発行も可能となっている．
 
 \begin{figure}[ht]
   \begin{center}
@@ -30,20 +86,32 @@ Googleでは，アカウントにログインする際に複数の多要素化�
   \label{fig:googleAuthenticator}
 \end{figure}
 
-\subsection{PassBan}
-PassBoard\footnote{米PassBan社により提供}というアプリケーションソフトウェアは，スマートフォン上にある各アプリケーションにアクセスする際の認証機能を提供している(図\ref{fig:passboard})．このアプリケーションでは，パスワード認証や音声認証，GPS認証，顔認証などを組み合わせて多要素化が可能となっている．
+\subsection{PassBoard}\label{subsec:passboard}
+PassBoard\footnote{米PassBan社により提供}というアプリケーションソフトウェア\cite{passboard}は，スマートフォン上にある各アプリケーションにアクセスする際の認証機能を提供している．
+このアプリケーションでは，パスワード認証や音声認証，GPS認証，顔認証などを組み合わせて多要素化が可能となっており，更に認証時の周囲の環境(明るさや騒音)に合わせて，使用する認証方式を自動で設定する機能を持っている．
+図\ref{fig:passboard}左は，使用する認証方式の画面であり，このようなリストの中からいくつでも組み合わせて使用することができる．
+図\ref{fig:passboard}右は，認証を付与するアプリケーションに対する個別なセキュリティレベルの設定画面であり，そのソフトウェアの重要度に応じて認証の要素数を変えることができる．
 
 \begin{figure}[ht]
-  \begin{center}
-    \epsfig{file=img/passboard.eps,scale=0.75}
-  \end{center}
-  \caption{PassBoardの設定画面}
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=60mm]{img/passboardFactor.eps}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.5\hsize}
+    \begin{center}
+      \includegraphics[width=60mm]{img/passboardConfig.eps}
+    \end{center}
+  \end{minipage}
+  \caption{PassBoardの各種設定画面}
   \label{fig:passboard}
 \end{figure}
 
 \subsection{Authy}
-Authy\footnote{[ここにAuthyの説明が入ります]}というアプリケーションソフトウェアを用いると，GoogleやDropboxなどの二要素認証に対応しているサービスだけでなく，SSH\footnote{Secure SHell}接続やWordPress\footnote{オープンソースのブログソフトウェア}へのログインも二要素化が可能となる．
-Authyに紐付けたWebサービスへログインする際は，通常の手順に加えAuthyのアプリケーション内に表示されているアクセストークン(図\ref{fig:authyiPhone})を入力することで，ログインが完了する．
+Authy\cite{authy}というアプリケーションソフトウェアを用いると，GoogleやDropboxなどの二要素認証に対応しているサービスだけでなく，SSH\footnote{Secure SHell}接続や個人のサーバにインストールしたWordPress\footnote{オープンソースのブログソフトウェア}へのログインも二要素化が可能となる．
+Authyに紐付けたWebサービスもしくはWordPressへログインする際は，通常の手順に加え，SMSによって送信されるもしくはAuthyのアプリケーション内に表示されているアクセストークン(図\ref{fig:authyiPhone})を入力する(図\ref{fig:authySSH})ことで，ログインが完了する．
+SSH接続の認証は，sshコマンドの設定項目に関連付けることでAuthyのプラグインを起動させる．
+この場合も同様に，前述のAuthyに紐付けたWebサービスと同じ手順で手に入れたアクセストークンを図\ref{fig:authySSH}のようにコマンドラインインターフェイス上で入力することで完了する．
 
 \begin{figure}[ht]
   \begin{center}
@@ -53,10 +121,27 @@ Authyに紐付けたWebサービスへログインする際は，通常の手順
   \label{fig:authyiPhone}
 \end{figure}
 
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=img/authySSH.eps,scale=0.6}
+  \end{center}
+  \caption{Authyを用いて二要素認証化したSSH接続画面}
+  \label{fig:authySSH}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=img/authyWordpress.eps,scale=0.6}
+  \end{center}
+  \caption{Authyを用いて二要素認証化したWordPressのログイン画面}
+  \label{fig:authyWordpress}
+\end{figure}
+
 \subsection{オンラインゲームにおける多要素化例}
-オンラインゲームにおいては，ハードウェアトークン(図\ref{fig:physicalAuthenticator})による認証の多要素化が普及している\cite{DBLP:journals/corr/CristofaroDFN13}．
+オンラインゲームにおいては，図\ref{fig:physicalAuthenticator}のようなハードウェアトークンによる認証の多要素化が普及している\cite{DBLP:journals/corr/CristofaroDFN13}．
 2004年にゲームの限定パッケージにハードウェアトークンが付属した\cite{Yamane:2011:SOG:2021672.2021743}ことがきっかけで現在でも多くのオンラインゲームに二要素認証が導入されている．
-これらのハードウェアトークンの多くは時刻同期によるワンタイムパスワード生成を行っており，小型の液晶画面にそれを表示したものをログイン時にIDとパスワードの後に入力させることで行っている．
+これらのハードウェアトークンの多くはGoogleの例(\label{subsec:google2F}項)と同様，時刻同期によるワンタイムパスワード生成を行っており，小型の液晶画面にワンタイムパスワードが表示される．
+ゲームの利用者はゲームにログインする際に，ユーザIDとパスワードに加えて，ハードウェアトークンに表示されているワンタイムパスワードを入力することで，認証が完了し，ゲームをプレイ可能になる．
 また近年では，他のWebサービスと同様に携帯端末向けの専用トークン生成アプリケーションソフトウェア(図\ref{fig:mobileAuthenticator})が用意されていることもある．
 
 \begin{figure}[ht]

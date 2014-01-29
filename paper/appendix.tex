@@ -1,5 +1,33 @@
 \appendix
 \chapter{実装に関する付録}\label{apdx:app}
+\section{実装の詳細}
+%(実装に関しては〜のはなし．クラス図とか概略図を入れたほうがよさそう)
+Notifauthは，iOS用アプリケーションとして実装された．
+クラス図は図\ref{fig:notifauthClass}の通りである．
+
+\begin{figure}[ht]
+  \begin{center}
+    \epsfig{file=img/notifauthClass.eps,scale=0.2}
+  \end{center}
+  \caption{Notifauthのクラス図}
+  \label{fig:notifauthClass}
+\end{figure}
+
+Twitterの認証情報(OAuthの認証トークン)は，Apple社の``Keychain''により，暗号化し保存されている．
+ツイートのデータは，Object-relational mapping(以降ORM)フレームワークであるCoreDataを用いてSQLiteファイルに保存されている．
+また，Notifauth内の様々な設定情報はiOS標準のNSUserDefaultsオブジェクトを利用しアプリケーションソフトウェア内の専用領域に保存されており．今回は特に暗号化は行っていない．
+
+使用したサードパーティ製ライブラリは
+\begin{itemize}
+\item MagicalRecord
+\item MKNetworkKit
+\item RSOAuthEngine
+\item RSTwitterEngine
+\item NSDate-Utilities
+\end{itemize}
+である．
+ソースコードは付録\ref{apdx:code}にある通り，Webで一般公開されている．
+
 \section{実装コード}\label{apdx:code}
 Mac OSXのXcode 5上にて，Objective-Cを用いて実装した．
 ソースコード等を含めたXcodeプロジェクトの各ファイルは，\url{https://github.com/storz/Notifauth}へ設置し，MITライセンスにより配布している．
@@ -90,32 +118,78 @@ Mac OSXのXcode 5上にて，Objective-Cを用いて実装した．
   \item[D]：PIN Mode
 \end{description}
 
+\section{結果送信の詳細手順}
+\begin{enumerate}
+  \item トップ画面で「Send」をタップすると，iOS標準のメール送信画面が開くので，何も編集を行わずに送信する．
+  \item ここで仮にiOSへ自分のメール情報(送信サーバ，アカウントなど)が登録されていない場合以下の手順を行う
+  \begin{enumerate}
+    \item 「Send」をタップせず，トップ画面下部の「copy experiment data on clipboard」をタップする．
+    \item クリップボードにデータがコピーされているので，メールアプリに貼り付けて実験担当者のメールアドレスへ送信する．
+  \end{enumerate}
+\end{enumerate}
+
 \newpage
 
 \section{評価実験の概要説明資料}
-\includegraphics[width=13cm]{resource/intro_1.ps}
+\includegraphics[width=14.3cm]{resource/intro_1.ps}
 \newpage
-\includegraphics[width=13cm]{resource/intro_2.ps}
+\includegraphics[width=14.3cm]{resource/intro_2.ps}
 \newpage
 
 \section{Notifauth操作マニュアル}
-\includegraphics[width=13cm]{resource/manual_1.pdf}
+\includegraphics[width=14.3cm]{resource/manual-page1.pdf}
 \newpage
-\includegraphics[width=13cm]{resource/manual_2.pdf}
+\includegraphics[width=14.3cm]{resource/manual-page2.pdf}
 \newpage
-\includegraphics[width=13cm]{resource/manual_3.pdf}
+\includegraphics[width=14.3cm]{resource/manual-page3.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page4.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page5.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page6.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page7.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page8.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/manual-page9.pdf}
 \newpage
 
 \section{評価実験における中間アンケート}\label{apdx:interimEnquete}
-\includegraphics[width=13cm]{resource/enquete_interim_1.ps}
+\includegraphics[width=14.3cm]{resource/enquete_interim_1.ps}
 \newpage
-\includegraphics[width=13cm]{resource/enquete_interim_2.ps}
+\includegraphics[width=14.3cm]{resource/enquete_interim_2.ps}
 \newpage
-\includegraphics[width=13cm]{resource/enquete_interim_3.ps}
+\includegraphics[width=14.3cm]{resource/enquete_interim_3.ps}
 \newpage
-\includegraphics[width=13cm]{resource/enquete_interim_4.ps}
+\includegraphics[width=14.3cm]{resource/enquete_interim_4.ps}
 \newpage
-\includegraphics[width=13cm]{resource/enquete_interim_5.ps}
+\includegraphics[width=14.3cm]{resource/enquete_interim_5.ps}
 \newpage
 
 \section{評価実験における最終アンケート}\label{apdx:finalEnquete}
+\includegraphics[width=14.3cm]{resource/enquete_final-page1.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page2.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page3.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page4.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page5.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page6.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page7.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page8.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page9.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page10.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page11.pdf}
+\newpage
+\includegraphics[width=14.3cm]{resource/enquete_final-page12.pdf}
+\newpage

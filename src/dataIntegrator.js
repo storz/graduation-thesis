@@ -1,4 +1,4 @@
-var fs   = require('fs')
+var fs   = require('fs'),
 	path = require('path'),
 	date = require('date-utils'),
 	_    = require('underscore');
@@ -33,6 +33,7 @@ files.forEach(function (fileName) {
 users.forEach(function (user) {
 	var userId = user.id.slice(0, 6)
 	var eachData = exData[userId];
+	var counter = 0;
 	for (var pattern in eachData) {
 		var startDate = new Date(eachData[pattern][0]['date']);
 		eachData[pattern].forEach(function (d) {
@@ -50,17 +51,18 @@ users.forEach(function (user) {
 				userId,
 				pattern,
 				d.date,
-				d.result,
+				(d.result == 'Success') ? 1 : 0,
 				d.eachResult.notification,
 				d.eachResult.passcode,
 				cause,
 				d.time,
 				daysDiff
 			];
-			console.log(daysDiff, allDataOutput[allDataOutput.length - 1][9]);
+			//console.log(daysDiff, allDataOutput[allDataOutput.length - 1][9]);
 			if (pattern == allDataOutput[allDataOutput.length - 1][2] &&
 				daysDiff == allDataOutput[allDataOutput.length - 1][9]) return;
 			allDataOutput.push(result);
+			counter++;
 			/*
 			switch (pattern) {
 				case 'auto_term':
@@ -78,6 +80,8 @@ users.forEach(function (user) {
 			}*/
 		})
 	}
+	if (counter === 16) console.log('☑' + userId)
+	else console.log('☐' + userId)
 });
 
 function convertToCSV (twoDimArr) {
@@ -88,7 +92,7 @@ function convertToCSV (twoDimArr) {
 	return rows.join('\n');
 }
 
-console.log(allDataOutput)
+//console.log(allDataOutput)
 
 fs.writeFile(rootDir + '/drive/full_data.csv', convertToCSV(allDataOutput), 'utf8');
 fs.writeFile('/Users/storz/Dropbox/Public/_docs/full_data.csv', convertToCSV(allDataOutput), 'utf8');
