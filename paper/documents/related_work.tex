@@ -38,14 +38,6 @@ Hongluら\cite{DBLP:journals/corr/CristofaroDFN13}は，多要素認証の中で
 \end{description}
 
 \section{認証の多要素化手法}\label{sec:multifactor}
-多要素認証においては，ワンタイムパスワードが多く使われる．
-ワンタイムパスワードの生成手法は複数あり，
-\begin{itemize}
-\item 数学的アルゴリズムを用いるもの：一方向性関数に初期シードを与えることで動作，パスワードを生成させる手法
-\item 時刻同期によるもの：認証サーバの時計と同期させ，その時刻に基づいてパスワードを生成する手法
-\item トランザクション認証番号を用いるもの：ランダム生成されたパスワードのリストを用意し，それを消費してゆく手法
-\end{itemize}
-などが一般的である．具体的な応用例は以下に示す．
 
 \subsection{Google}\label{subsec:google2F}
 Googleでは，アカウントにログインするための認証の多要素化方法を実装している．
