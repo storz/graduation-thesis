@@ -10,7 +10,7 @@ var twitter = new Twitter({
 });
 
 var count = 0;
-var param = {screen_name: 'No60996', count: 200, include_rts: false};
+var param = {screen_name: 'eiryyy', count: 200, include_rts: false};
 
 var getTweets = function (before) {
 	if (before) param.max_id = before;

@@ -58,10 +58,10 @@ SMSを用いて，事前に登録された電話番号によりユーザの持�
 SMSではなく電話を利用して，機械音声でワンタイムパスワードを確認することが可能となっている．
 
 \subsubsection{携帯端末向けアプリケーションでワンタイムパスワードを生成する方式}
-``Google Authenticator''と呼ばれる携帯端末向けのワンタイムパスワード生成アプリケーション(図\ref{fig:googleAuthenticator})を公開しており，実装されている以下の2種類のワンタイムパスワード生成アルゴリズムは，どちらもWebの画面に表示された16文字のbase32文字列の入力もしくはQRコードを読み込むことで渡されるユーザ固有の秘密鍵と，特定の変数によりSHA1\footnote{アメリカ国家安全保障局によって設計されたハッシュ関数の一つ．SHAはSecure Hash Algorithmの略}を用いたHMAC(Hash-based Message Authentication Code\footnote{暗号ハッシュ関数に基づいたメッセージ認証符号．秘密鍵とメッセージとハッシュ関数により計算される．})を生成し，6桁の数字コードに変換するものであるが，そこに用いられる変数が異なっている．
+``Google Authenticator''\cite{googleAuthenticatorCode}と呼ばれる携帯端末向けのワンタイムパスワード生成アプリケーション(図\ref{fig:googleAuthenticator})を公開しており，実装されている以下の2種類のワンタイムパスワード生成アルゴリズムは，どちらもWebの画面に表示された16文字のbase32文字列の入力もしくはQRコードを読み込むことで渡されるユーザ固有の秘密鍵と，特定の変数によりSHA1\footnote{アメリカ国家安全保障局によって設計されたハッシュ関数の一つ．SHAはSecure Hash Algorithmの略}を用いたHMAC(Hash-based Message Authentication Code\footnote{暗号ハッシュ関数に基づいたメッセージ認証符号．秘密鍵とメッセージとハッシュ関数により計算される．})を生成し，6桁の数字コードに変換するものであるが，そこに用いられる変数が異なっている．
 \begin{description}
-  \item[HOTP(HMAC-based One-Time Password)] 前述の``数学的アルゴリズムを用いる''生成手法であり，ボタンをタップすることで1つのワンタイムパスワードが生成されるが，その生成回数を変数として利用し生成する\footnote{RFC 4226 - ``HMAC-based One-Time Password Algorithm''にて規定}
-  \item[TOTP(Time-based One-Time Password)] 前述の``時間同期による''，HOTPを拡張した手法であり，サーバからのメッセージを用いて30秒ごとに変数を決定し生成する(この方式を用いた場合，30秒毎にワンタイムパスワードは更新される)\footnote{RFC 6238 - ``Time-based One-Time Password Algorithm''にて規定}
+  \item[HOTP(HMAC-based One-Time Password)] 前述の``数学的アルゴリズムを用いる''生成手法であり，ボタンをタップすることで1つのワンタイムパスワードが生成されるが，その生成回数を変数として利用し生成する\cite{rfc4226}
+  \item[TOTP(Time-based One-Time Password)] 前述の``時間同期による''，HOTPを拡張した手法であり，サーバからのメッセージを用いて30秒ごとに変数を決定し生成する(この方式を用いた場合，30秒毎にワンタイムパスワードは更新される)\cite{rfc6238}
 \end{description}
 なお，いずれの手法もHOTPであれば回数が，TOTPであれば時刻が，クライアント側とサーバ側で同期している必要が存在する．
 ちなみに，上記の2アルゴリズムのいずれかを実装し，更にユーザ固有の秘密鍵を出力できるWebサービスならばこのアプリケーションを用いた認証の二要素化が可能となっている．
