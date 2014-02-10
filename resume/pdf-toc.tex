@@ -1,0 +1,54 @@
+%%
+%% This is file `pdf-toc.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% pdfpages.dtx  (with options: `example3')
+%% 
+%% This file demonstrates how to use the pdfpages package.
+%%
+%% Please send error reports and suggestions for improvements to
+%%   Andreas MATTHIAS <andreas.matthias@gmail.com>.
+%%
+\documentclass[a4paper]{book}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\usepackage[plainpages=false, pdfpagelabels,
+            bookmarksopen]{hyperref}
+
+\begin{document}
+\tableofcontents
+
+\chapter{How to create a toc}
+
+The next pages were inserted using the following command:
+
+\begin{verbatim}
+\includepdf[pages=1-6,
+            pagecommand={},
+            addtotoc={1, chapter, 0, Main chapter,   cha:main,
+                      1, section, 1, First section,  sec:first,
+                      3, section, 1, Second section, sec:second},
+            trim=0 120 0 120, clip]{dummy.pdf}
+\end{verbatim}
+
+\noindent
+See Chapter \ref{cha:main} (\nameref{cha:main}) on page
+\pageref{cha:main}.\par\noindent
+See Section \ref{sec:first} (\nameref{sec:first}) on page
+\pageref{sec:first}.\par\noindent
+See Section \ref{sec:second} (\nameref{sec:second}) on page
+\pageref{sec:second}.
+
+\includepdf[pages=1-6,
+            pagecommand={},
+            addtotoc={1, chapter, 0, Main chapter,   cha:main,
+                      1, section, 1, First section,  sec:first,
+                      3, section, 1, Second section, sec:second},
+            trim=0 120 0 120, clip]{dummy.pdf}
+
+\end{document}
+\endinput
+%%
+%% End of file `pdf-toc.tex'.

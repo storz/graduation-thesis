@@ -58,6 +58,7 @@ users.forEach(function (user) {
 				d.time,
 				daysDiff
 			];
+			//console.log(userId)
 			//console.log(daysDiff, allDataOutput[allDataOutput.length - 1][9]);
 			if (pattern == allDataOutput[allDataOutput.length - 1][2] &&
 				daysDiff == allDataOutput[allDataOutput.length - 1][9]) return;

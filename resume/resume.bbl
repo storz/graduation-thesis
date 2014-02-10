@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{idcsmartphone}
+IDC Japan.
+\newblock
+  {国内モバイル／クライアントコンピューティング機器
+  家庭ユーザー利用実態調査結果を発表}.
+\newblock
+  入手先〈\texttt{http://\ab{}www.idcjapan.co.jp/\ab{}Press/\ab{}Current/\ab{}20131003Apr.html}〉（参照2013-01-14）.
+
+\bibitem{keishichoSmartphone}
+{スマートフォンを利用している方へ：警視庁}.
+\newblock
+  入手先〈\texttt{http://\ab{}www.keishicho.\ab{}metro.tokyo.jp/\ab{}haiteku/\ab{}haiteku/\ab{}haiteku414.htm}〉（参照2014-02-02）.
+
+\bibitem{hiddenLock}
+{Hidden Lock}.
+\newblock
+  入手先〈\texttt{https://\ab{}play.google.\ab{}com/\ab{}store/\ab{}apps/\ab{}details?id=\ab{}tv.marinelli.\ab{}android.\ab{}HiddenLock}〉（参照2014-02-02）.
+
+\bibitem{applock}
+{AppLock}.
+\newblock
+  入手先〈\texttt{https://\ab{}play.google.\ab{}com/\ab{}store/\ab{}apps/\ab{}details?id=\ab{}com.domobile.\ab{}applock}〉（参照2014-02-02）.
+
+\bibitem{passboard}
+{PASSBAN}.
+\newblock
+  入手先〈\texttt{http://\ab{}www.passban.com/}〉（参照2014-01-25）.
+
+\bibitem{西垣正勝:2006-03-15}
+西垣 正勝 and 小池 誠.
+\newblock {ユーザの生活履歴を用いた認証方式 :
+  電子メール履歴認証システムネットワークセキュリティ}.
+\newblock {\em 情報処理学会論文誌}, 47(3):945--956, mar 2006.
+
+\bibitem{nemoto:2006-03-15}
+Tomofumi Nemoto, Kyohei Furukawa, and Manabu Okamoto.
+\newblock {Poster: Knowledge-Based Authentication using Twitter}.
+\newblock Symposium On Usable Privacy and Security 2011, 2011.
+
+\end{thebibliography}

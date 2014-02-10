@@ -5,6 +5,7 @@ paper/*
 !*.sty
 experimentData
 rawData
+reference
 reference_
 docs/*
 !manual.pdf
@@ -13,3 +14,5 @@ docs/*
 drive
 !test.xlsx
 users.js
+*.key
+

@@ -1,0 +1,140 @@
+%%
+%% This is file `pdf-hyp.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% pdfpages.dtx  (with options: `example2')
+%% 
+%% This file demonstrates how to use the pdfpages package.
+%%
+%% Please send error reports and suggestions for improvements to
+%%   Andreas MATTHIAS <andreas.matthias@gmail.com>.
+%%
+\documentclass[a4paper,12pt]{article}
+\usepackage[final]{pdfpages}
+\usepackage{verbatim}
+%% Uncomment the following lines, if you want to produce thumbnails.
+%%\usepackage{pdflscape}
+%%\usepackage{thumbpdf}
+\usepackage[bookmarksopen]{hyperref}
+
+\newcounter{example}
+\setcounter{example}{1}
+
+\newenvironment{example}
+  {\par\vskip\topsep%
+   \noindent\textbf{Example \arabic{example}:}%
+   \stepcounter{example}%
+   \par\vskip\topsep%
+   \minipage{.9\linewidth}%
+   \verbatim}
+  {\endverbatim%
+   \endminipage\vskip\topsep}
+
+\newcommand{\meta}[1]{\ensuremath\langle\texttt{#1}\ensuremath\rangle}
+\newcommand{\link}[2]{\meta{#1}.\meta{#2}}
+
+\newcommand*{\bookmark}[3][0]{%
+  \pdfoutline user {<< /S /GoTo /D (#3) >>} count #1 {#2}}
+
+\begin{document}
+
+\title{A Demonstration of the Hypertext Operations\\
+       of the \texttt{pdfpages} Package}
+\author{Andreas MATTHIAS}
+\maketitle
+
+This is a demonstration of the \texttt{pdfpages} package.
+It is \textit{not} the documentation of the package.
+To get the documentation run: `latex pdfpages.dtx'
+
+\tableofcontents
+
+\section{Hyperlinks}
+\subsection{Links to the inserted Pages}
+
+Hyperlinks are created by using the option \texttt{link}
+of the \verb|\includepdf| command. Each inserted page
+gets a link name consisting of the filename and
+the page number: \link{filename}{page number}
+
+\begin{example}
+\includepdf[pages=1-2, link]{dummy.pdf}
+\end{example}
+
+In this example the two pages have the link names
+`\texttt{dummy.pdf.1}' and `\texttt{dummy.pdf.2}'.
+Setting links to these
+pages, can be done easily with the \verb|\hyperlink|
+macro from the \texttt{hyperref.sty} package:
+
+\bigskip
+\verb|\hyperlink{dummy.pdf.1}{Page 1}|\hskip10pt \hyperlink{dummy.pdf.1}{Page 1}\par
+\verb|\hyperlink{dummy.pdf.2}{Page 2}|\hskip10pt \hyperlink{dummy.pdf.2}{Page 2}
+\bigskip
+
+This way you can refer to the \hyperlink{dummy.pdf.1}{first}
+and the \hyperlink{dummy.pdf.2}{second page}.
+
+\includepdf[pages=1-2, link]{dummy.pdf}
+
+Inserting the same page twice would result in two
+identical link names. To prevent this use the option
+\texttt{linkname} to specify another name for the links.
+
+\begin{example}
+\includepdf[pages=1-2, nup=1x2, landscape,
+            link, linkname=mylink]{dummy.pdf}
+\end{example}
+
+\noindent
+Now the links are called `\texttt{mylink.1}' and
+`\texttt{mylink.2}'.
+
+\bigskip
+\verb|\hyperlink{mylink.1}{Page 1}|\hskip10pt \hyperlink{mylink.1}{Page 1}\par
+\verb|\hyperlink{mylink.2}{Page 2}|\hskip10pt \hyperlink{mylink.2}{Page 2}
+
+\includepdf[pages=1-2, nup=1x2, landscape,
+            link, linkname=mylink]{dummy.pdf}
+
+\subsection{Links to the original Document}
+
+Each page can be a hyperlink to the document from
+which it was extracted. This can be done with the
+option \texttt{linktodoc}.
+
+Click on the inserted pages and see what happens.
+
+\begin{example}
+\includepdf[pages=1-4, nup=2x2, linktodoc]{dummy.pdf}
+\end{example}
+\includepdf[pages=1-4, nup=2x2, linktodoc]{dummy.pdf}
+
+\section{Article Threads}
+
+In a PDF document one or more article threads may be defined.
+An article thread is a logical connected sequence of content
+items.
+
+With the option \texttt{thread} the inserted pages become
+an article thread.
+
+\begin{example}
+\includepdf[pages=1-4, nup=2x2, column,
+            landscape, thread]{dummy-l.pdf}
+\end{example}
+
+In Acrobat Reader the mouse pointer changes to a hand with
+a little arrow in it when moved over an article thread.
+By clicking on the page you can easily follow the logical
+structure of the article thread.
+
+\includepdf[pages=1-4, nup=2x2, column,
+            landscape, thread]{dummy-l.pdf}
+
+\end{document}
+\endinput
+%%
+%% End of file `pdf-hyp.tex'.
